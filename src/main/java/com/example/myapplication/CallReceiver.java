@@ -21,11 +21,15 @@ public class CallReceiver extends BroadcastReceiver {
                         break;
                     case TelephonyManager.EXTRA_STATE_OFFHOOK:
                         Log.d(TAG, "Call answered");
-                        // Perform actions when call is answered (e.g., start recording)
+                        // Start the recording service when call is answered
+                        Intent startIntent = new Intent(context, CallRecordingService.class);
+                        context.startService(startIntent);
                         break;
                     case TelephonyManager.EXTRA_STATE_IDLE:
                         Log.d(TAG, "Call ended");
-                        // Perform actions when call ends (e.g., stop recording, analyze call data)
+                        // Stop the recording service when call ends
+                        Intent stopIntent = new Intent(context, CallRecordingService.class);
+                        context.stopService(stopIntent);
                         break;
                 }
             }
